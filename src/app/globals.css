@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Theme tokens (space-separated RGB channels for Tailwind opacity) ──────── */
+:root {
+  /* Dark theme — medium greys, never black (default) */
+  --bg: 62 66 73;
+  --fg: 236 238 241;
+  --fg-muted: 194 200 208;
+  --fg-subtle: 150 157 166;
+  --line: 128 134 143;
+  --accent: 236 238 241;
+  --accent-fg: 40 44 50;
+
+  --scrim: 62 66 73;
+  --panel-bg: linear-gradient(160deg, rgba(44, 48, 54, 0.6), rgba(36, 39, 45, 0.48));
+  --panel-border: rgba(255, 255, 255, 0.12);
+  --panel-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 30px 80px -40px rgba(0, 0, 0, 0.7);
+  --halo: rgba(0, 0, 0, 0.4);
+  --selection: rgba(236, 238, 241, 0.22);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    /* Light theme — near-white daytime */
+    --bg: 237 239 242;
+    --fg: 32 36 42;
+    --fg-muted: 74 80 90;
+    --fg-subtle: 116 123 133;
+    --line: 168 174 184;
+    --accent: 32 36 42;
+    --accent-fg: 244 246 248;
+
+    --scrim: 237 239 242;
+    --panel-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.66), rgba(246, 248, 250, 0.52));
+    --panel-border: rgba(32, 36, 42, 0.1);
+    --panel-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset,
+      0 30px 80px -44px rgba(30, 40, 60, 0.28);
+    --halo: rgba(255, 255, 255, 0.6);
+    --selection: rgba(32, 36, 42, 0.16);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+/* Lenis recommended styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Thin, theme-aware scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(var(--bg));
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--line) / 0.7);
+  border-radius: 999px;
+  border: 3px solid rgb(var(--bg));
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--line));
+}
+
+::selection {
+  background: var(--selection);
+}
+
+/* Frosted glass panel used by content sections — flips with the theme */
+.glass {
+  background: var(--panel-bg);
+  backdrop-filter: blur(14px) saturate(115%);
+  -webkit-backdrop-filter: blur(14px) saturate(115%);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--panel-shadow);
+}
+
+/* Text with a soft halo so it stays legible over the moving city */
+.legible {
+  text-shadow: 0 2px 26px var(--halo), 0 1px 3px var(--halo);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
